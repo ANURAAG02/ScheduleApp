@@ -1,25 +1,24 @@
 import React from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
-  useColorScheme,
   View,
 } from 'react-native';
-import { Calendar } from 'react-native-calendars';
+// import { Calendar } from 'react-native-calendars';
 // import ScheduleApp from './src/screen/scheduleApp';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/screen/home';
+import ScheduleApp from './src/screen/scheduleApp';
+import CalendarApp from './calendar';
+import Styles from './Style';
 
 
 
 
-
-const Stack = createNativeStackNavigator
+const Stack = createNativeStackNavigator();
 
 
 const App=()=>{
@@ -29,46 +28,46 @@ const App=()=>{
         {/* <Stack.Screen name="ScheduleApp" component={ScheduleApp} /> */}
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="ScheduleApp" component={ScheduleApp} />
+        <Stack.Screen name="CalendarApp" component={CalendarApp} />
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
 
-const Main =()=>{
+const Main =({navigation})=>{
   return (
     <SafeAreaView>
-      <View style={{justifyContent:'center', alignItems:'center'}}>
-      <Text style={{justifyContent:'center', alignItems:'center', fontSize:40}}>Calendar</Text>
-      {/* <Calendar
-       style={{
-        borderWidth: 1,
-        borderColor: 'gray',
-        height: 350
-      }}
-      current={'2012-03-01'}
-      onDayPress={day=>{console.log('select day', day)}}
-      markedDates={{
-        '2012-03-01': {selected: true, marked: true, selectedColor: 'blue'},
-        '2012-03-02': {marked: true},
-        '2012-03-03': {selected: true, marked: true, selectedColor: 'blue'}
-      }}
-      theme={{
-        backgroundColor: '#0000',
-        calendarBackground: '#0000',
-        textSectionTitleColor: '#b6c1cd',
-        selectedDayBackgroundColor: '#00adf5',
-        selectedDayTextColor: '#ffffff',
-        todayTextColor: '#00adf5',
-        dayTextColor: '#2d4150',
-        textDisabledColor: '#d9e'
-      }}/>    */}
-    <TouchableOpacity
-    title='press here'
-    onPress={()=>navigation.navigate('ScheduleApp')}
-    style={{}}>
-      <Text>Press Here</Text>
-    </TouchableOpacity>
-    </View>
+        <View style={Styles.container}>
+
+
+            <View style={Styles.text}>
+                <Text style={{fontSize:40}}>Login</Text>
+            </View>
+
+
+            <View style={Styles.TextInput}>
+              <TextInput
+                  placeholder='Email'>
+              </TextInput>  
+              <TextInput
+                  placeholder='Password'>
+              </TextInput>  
+            </View>
+
+
+
+            <View style={Styles.buttonContainer}>
+              <TouchableOpacity onPress={()=>navigation.navigate('ScheduleApp')}>
+                <Text>Event Sheduler</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={()=>navigation.navigate('CalendarApp')}>
+                <Text>Calendar</Text>
+              </TouchableOpacity>
+            </View>
+
+        </View>
       </SafeAreaView>
   )
 }
@@ -76,3 +75,5 @@ const Main =()=>{
 
 
 export default App;
+
+

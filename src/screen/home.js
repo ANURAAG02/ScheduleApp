@@ -1,10 +1,8 @@
 import React from "react";
-import { View, Text } from "react-native/types";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
+import { View, Text } from "react-native";
 
 
-const Home =({navigation})=>{
+const Home =()=>{
     return (
         <Text style= {{fontSize:20}}>
           Home

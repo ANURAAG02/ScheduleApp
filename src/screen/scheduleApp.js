@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
 import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Agenda, DateData } from 'react-native-calendars';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { useState } from 'react';
 // import testIDs from '../testIDs';
 
 
-const timeToString = ()=>{
+const timeToString = (time)=>{
   const date = new Date(time);
   return date.toISOString().split('T')[0];
 }
 
 
-const ScheduleApp=({navigation})=>{
+const ScheduleApp=()=>{
   const [items,SetItems] = useState([]);
   
   loadItems = (day) => {
-    const items = this.state.items || {};
 
     setTimeout(() => {
       for (let i = -15; i < 85; i++) {
@@ -47,12 +45,15 @@ const ScheduleApp=({navigation})=>{
 
 
     return (
-      <Agenda
-        // testID={testIDs.agenda.CONTAINER}
-        items={items}
-        loadItemsForMonth={loadItems}
-        selected={'2017-05-16'}
-        />
+      <View style={{flex:1}}>
+
+        <Agenda
+          // testID={testIDs.agenda.CONTAINER}
+          items={items}
+          loadItemsForMonth={loadItems}
+          selected={'2017-05-16'}
+          />
+      </View>
       )
     }
         
@@ -113,14 +114,6 @@ const ScheduleApp=({navigation})=>{
     );
   };
 
-//   rowHasChanged = (r1, r2) => {
-//     return r1.name !== r2.name;
-//   };
-
-//   timeToString(time) {
-//     const date = new Date(time);
-//     return date.toISOString().split('T')[0];
-// }
 
 export default ScheduleApp;
 
