@@ -51,7 +51,7 @@ const ScheduleApp=()=>{
           // testID={testIDs.agenda.CONTAINER}
           items={items}
           loadItemsForMonth={loadItems}
-          selected={'2017-05-16'}
+          selected={'2023-05-27'}
           />
       </View>
       )

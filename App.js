@@ -10,7 +10,6 @@ import {
 // import ScheduleApp from './src/screen/scheduleApp';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './src/screen/home';
 import ScheduleApp from './src/screen/scheduleApp';
 import CalendarApp from './calendar';
 import Styles from './Style';
@@ -27,7 +26,6 @@ const App=()=>{
       <Stack.Navigator>
         {/* <Stack.Screen name="ScheduleApp" component={ScheduleApp} /> */}
         <Stack.Screen name="Main" component={Main} />
-        <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="ScheduleApp" component={ScheduleApp} />
         <Stack.Screen name="CalendarApp" component={CalendarApp} />
       </Stack.Navigator>
@@ -38,15 +36,18 @@ const App=()=>{
 const Main =({navigation})=>{
   return (
     <SafeAreaView>
-        <View style={Styles.container}>
+        {/* <View style={Styles.container}> */}
+        <View>
 
 
-            <View style={Styles.text}>
+            {/* <View style={Styles.text}> */}
+            <View>
                 <Text style={{fontSize:40}}>Login</Text>
             </View>
 
 
-            <View style={Styles.TextInput}>
+            {/* <View style={Styles.TextInput}> */}
+            <View>
               <TextInput
                   placeholder='Email'>
               </TextInput>  
@@ -57,7 +58,8 @@ const Main =({navigation})=>{
 
 
 
-            <View style={Styles.buttonContainer}>
+            {/* <View style={Styles.buttonContainer}> */}
+            <View>
               <TouchableOpacity onPress={()=>navigation.navigate('ScheduleApp')}>
                 <Text>Event Sheduler</Text>
               </TouchableOpacity>

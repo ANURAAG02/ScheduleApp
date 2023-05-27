@@ -16,7 +16,7 @@ const CalendarApp =()=>{
           borderColor: 'gray',
           height: 350
         }}
-        current={'2012-03-01'}
+        current={'2023-05-27'}
         onDayPress={day=>{console.log('select day', day)}}
         markedDates={{
           '2012-03-01': {selected: true, marked: true, selectedColor: 'blue'},
