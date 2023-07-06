@@ -64,8 +64,6 @@ const Data = ({ navigation }) => {
                         title="Erase Value"
                         color={'green'}
                         onPress={clearFormData} />
-
-
                 </View>
                 <View>
                     {display ? <View>
@@ -99,7 +97,7 @@ const Data = ({ navigation }) => {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('UserData')}
+                        onPress={() => navigation.navigate('UserData', {name, email, password})}
                         style={{ borderWidth: 1, width: 50, margin: 20, alignItems: 'center', justifyContent: 'center' }}>
                         <Text>useEffect</Text>
                     </TouchableOpacity>

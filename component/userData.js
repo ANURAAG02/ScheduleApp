@@ -4,11 +4,13 @@ import { View, Text } from "react-native";
 import { Button } from "react-native";
 
 
-const UserData = () => {
+const UserData = (props) => {
+    console.log(props.route.params)
+    const {name,email,password} = (props.route.params);
 
     const [count, setCount] = useState(0);
     const [data, setData] = useState(100);
-    const [show,setShow] = useState(true)
+    const [show, setShow] = useState(true)
 
 
     useEffect(() => {
@@ -21,40 +23,49 @@ const UserData = () => {
 
 
     return (
-        <View>
-            <Text style={{ color: 'red', fontSize: 30 }}>Counter: {count}</Text>
-            <Text style={{ color: 'red', fontSize: 30 }}>Data: {data}</Text>
+        <View style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
+                <Text style={{ color: 'red', fontSize: 30 }}>Counter: {count}</Text>
+                <Text style={{ color: 'red', fontSize: 30 }}>Data: {data}</Text>
 
-            <Button
-                title="update Counter"
-                onPress={() => setCount(count + 2)}
-            />
+                <Button
+                    title="update Counter"
+                    onPress={() => setCount(count + 2)}
+                />
 
-            <Button
-                title="update Data"
-                onPress={() => setData(count + 2)}
-            />
+                <Button
+                    title="update Data"
+                    onPress={() => setData(count + 2)}
+                />
+            </View>
 
             {/* <User data={{ data, count }} /> */}
+            <View>
+                <Text>Name: {name}</Text>
+                <Text>email: {email}</Text>
+                <Text>password: {password}</Text>
+
+
+            </View>
             {/* <ShowHide/> */}
 
-            <View>
+            <View style={{ flex: 1 }}>
                 {/* <Text style={{ color: 'green', fontSize: 40 }}>Component</Text> */}
                 <Button
                     title="Hide"
-                    onPress={()=>setShow(false)} />
+                    onPress={() => setShow(false)} />
 
                 <Button
                     title="Show"
-                    onPress={()=>setShow(true)} />
+                    onPress={() => setShow(true)} />
 
-                   <Button 
-                   title="toggle"
-                   onPress={()=>setShow(!show)}/>
-                   
-                   {
-                      show ? (<ShowHide/> ):null
-                  }
+                <Button
+                    title="toggle"
+                    onPress={() => setShow(!show)} />
+
+                {
+                    show ? (<ShowHide />) : null
+                }
             </View>
         </View>
 
@@ -76,17 +87,17 @@ const User = (props) => {
     )
 }
 
-const ShowHide =()=>{
+const ShowHide = () => {
     // let timer = setInterval(()=>{
     //     console.warn("setInterval")
     // }, 2000)
     // useEffect(()=>{
     //     return ()=> clearInterval(timer)
     // })
-    return(
+    return (
 
         <View>
-            <Text style={{fontSize:30, color:'blue'}}>Show/Hide Component</Text>
+            <Text style={{ fontSize: 30, color: 'blue' }}>Show/Hide Component</Text>
         </View>
     )
 }
