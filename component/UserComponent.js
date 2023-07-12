@@ -1,5 +1,6 @@
 import React from "react"
 import { Text,View,StyleSheet } from "react-native"
+import { isConstructorDeclaration } from "typescript"
 
 const UserData = (props)=>{
     const power = props.power
@@ -47,4 +48,6 @@ const UserData = (props)=>{
     }
     });
 
+   
   export default UserData;
+

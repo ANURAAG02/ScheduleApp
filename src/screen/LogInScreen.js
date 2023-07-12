@@ -1,241 +1,173 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { TextInput } from "react-native";
-import { TouchableOpacity } from "react-native";
-import { ScrollView } from "react-native";
-import { FlatList } from "react-native";
-import { SectionList } from "react-native";
-import UserData from "../../component/UserComponent";
+import { useEffect } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, Button, Modal, Pressable, StatusBar, Platform, ScrollView, FlatList, TextInput } from "react-native";
+import UserModal from "../../component/UserModal";
+
+const App = ({ navigation }) => {
 
 
-class App extends React.Component{
-    render(props){
-      console.log(props)
-        return (
-            <View>
-                <Text>Class</Text>
-                <Text>{props.name}</Text>
-            </View>
-        )
-    }
-}
-
-
-
-const LoginScreen = () => {
-
-
-    
-
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [data, setData] = useState([])
     const [show, setShow] = useState(false)
-    const [number, setNumber] = useState()
-    const [secure, setSecure] = useState(true)
-
-
-
-    const clear = () => {
-        setName('');
-        setEmail('');
-        setPassword('');
-        setNumber('');
-        setShow(false)
+    const [selectedUser, setSelectedUser] = useState(undefined)
+    const getApiData = async () => {
+        const url = "http://192.168.29.254:3000/UserData"
+        let result = await fetch(url)
+        result = await result.json()
+        if (result) {
+            setData(result)
+        }
     }
 
-    const toggle = () => {
-        setSecure(!secure)
+
+
+    const deleteUser = async (id) => {
+        const url = "http://192.168.29.254:3000/UserData"
+        console.log(`${url}/${id}`)
+        let result = await fetch(`${url}/${id}`, {
+            method: "delete",
+        })
+        result = await result.json();
+        if (result) {
+            getApiData()
+        }
     }
 
-    const Users1 = [
-        {
-            id: 1,
-            name: "Anurag",
-            age : 31,
-            data : ["java", "data","php"]
-        },
-        {
-            id: 2,
-            name: "diya",
-            age :29,
-            data : ["java", "data","php"]
+
+    useEffect(() => {
+        getApiData();
+    }, [])
+
+    const usr = (data) => {
+        setShow(true)
+        setSelectedUser(data)
+    }
+
+    const [userData,setUserData] = useState([])
+
+    const searchUser = async (text)=>{
+        console.log(text)
+        const url = `http://192.168.29.254:3000/UserData?q=${text}`
+        console.log(url)
+        let result = await fetch(url)
+        result = await result.json()
+
+        if(result){
+            setUserData(result)
+        }
+    }
 
 
-        },
-        {
-            id: 3,
-            name: "Anurag",
-            age : 31,
-            data : ["java", "data","php"]
 
 
-
-        },
-        {
-            id: 4,
-            name: "diya",
-            data : ["java", "data","php"]
-
-        },
-        {
-            id: 5,
-            name: "Anurag",
-            age : 31,
-
-
-        },
-        {
-            id: 6,
-            name: "diya"
-        },
-        {
-            id: 7,
-            name: "Anurag",
-            age : 31
-
-        },
-        {
-            id: 8,
-            name: "diya"
-        },
-        {
-            id: 9,
-            name: "Anurag",
-            age : 31
-
-        },
-        {
-            id: 10,
-            name: "diya"
-        },
-    ]
     return (
+        <ScrollView style={styles.container}>
 
-        <View>
-            <App name ={"ANurag"}/>
-            <Text>Welcome to LOGIN screen</Text>
-            <ScrollView style={{marginBottom:30, marginTop:0}}>
+            <Button title="refrence" onPress={()=>navigation.navigate("ReferenceComponent")}/>
 
-                <TextInput
-                    placeholder="Enter your name here"
-                    style={styles.textInputContainer}
-                    onChangeText={(text) => {
-                        setName(text)
-                    }}
-                    value={name} />
-                <TextInput
-                    placeholder="Enter your Email here"
-                    style={styles.textInputContainer}
-                    onChangeText={(text) => {
-                        setEmail(text)
-                    }}
-                    value={email} />
-                <TextInput
-                    placeholder="Enter your Password here"
-                    style={styles.textInputContainer}
-                    onChangeText={(text) => {
-                        setPassword(text)
-                    }}
-                    secureTextEntry={secure}
-                    value={password} />
-                <TextInput
-                    placeholder="Enter your Contact Number here"
-                    style={styles.textInputContainer}
-                    onChangeText={(text) => {
-                        setNumber(text)
-                    }}
-                    value={number}
-                    maxLength={10}
-                    keyboardType="phone-pad" />
+            <TextInput
+                style={{ borderRadius: 10, borderWidth: 2, backgroundColor: 'skyblue', margin: 5 }}
+                placeholder="search"
+                onChangeText={(text)=>{searchUser(text)}}
+            />
 
-                <View style={styles.buttonStyle}>
-                    <TouchableOpacity style={styles.button} onPress={() => setShow(true)}>
-                        <Text>LogIn</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => setShow(clear)}>
-                        <Text>Signup</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => setSecure(toggle)}>
-                        <Text>{secure ? 'show' : 'hide'}</Text>
-                    </TouchableOpacity>
-                </View>
 
-                {
-                    show ?
-                        <View>
-                            <Text>{name}</Text>
-                            <Text>{email}</Text>
-                            <Text>{password}</Text>
-                            <Text>{number}</Text>
+            {
+                userData.length ? userData.map((item)=> 
+                        <View style={{flexDirection:'row', justifyContent:'space-between', padding:10}}>
+                            <Text style={{color:'white'}}>{item.name}</Text>
+                            <Text style={{color:'white'}}>{item.age}</Text>
+                            <Text style={{color:'white'}}>{item.email}</Text>
                         </View>
-                        : null
-                }
 
-                {/* <FlatList
-                data = {Users1}
-                renderItem={({item})=><Text>{item.name}</Text>}
-                keyExtractor = {item=>item.id}/> */}
+                ) :null
+            }
+            <Text style={{ fontSize: 30, textAlign: 'center' }}>Data</Text>
 
-                {/* {
-                    Users1.map((item) => <UserData item={item} data = "AnuragRaut" power = 'power'/>
-                
-                    )
-                } */}
+            <View style={styles.wrapper}>
+                <View style={{ flex: 1 }}><Text style={{ fontSize: 15 }}>id</Text></View>
+                <View style={{ flex: 1 }}><Text style={{ fontSize: 15 }}>Name</Text></View>
+                <View style={{ flex: 1 }}><Text style={{ fontSize: 15 }}>Age</Text></View>
+                <View style={{ flex: 1 }}><Text style={{ fontSize: 15 }}>Email</Text></View>
+                <View style={{ flex: 1 }}><Text style={{ fontSize: 15 }}>Delete</Text></View>
+                <View style={{ flex: 1 }}><Text style={{ fontSize: 15 }}>Update</Text></View>
+            </View>
 
-                {/* <SectionList
-                    sections={Users1}
-                    renderItem={(item)=> <View>
-                        <Text style={styles.text}>{item.name}</Text>
-                        <Text style={styles.text}>{item.age}</Text>
-                        <Text style={styles.text}>{item.id}</Text>
-                        </View>}
-                    renderSectionHeader={({section:{name}})=>{<Text>{name}</Text>}}/> */}
-            </ScrollView>
-        </View>
- 
+            {
+                data.length ? data.map((item) =>
+                    <View style={styles.wrapper}>
+
+
+
+
+
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ fontSize: 30 }}>{item.id}</Text>
+                        </View>
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ fontSize: 15 }}>{item.name}</Text>
+                        </View>
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ fontSize: 15 }}>{item.age}</Text>
+                        </View>
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ fontSize: 15 }}>{item.email}</Text>
+                        </View>
+                        <View style={{ flex: 1 }}>
+                            <Button title="Delete"
+                                onPress={() => deleteUser(item.id)} />
+                        </View>
+                        <View style={{ flex: 1 }}>
+                            <Button title="Update"
+                                onPress={() => usr(item)} />
+                        </View>
+
+                        <Modal visible={show} transparent={true}>
+                            <UserModal
+                                setShow={setShow}
+                                selectedUser={selectedUser}
+                                getApiData={getApiData()} />
+                        </Modal>
+                    </View>
+                )
+
+
+                    : <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+                        <ActivityIndicator
+
+                            size={50} />
+                    </View>
+            }
+        </ScrollView>
     )
 }
-
-
-
 const styles = StyleSheet.create({
-    textInputContainer: {
+    textBox: {
         borderWidth: 2,
-        borderColor: "red",
-        margin: 10
-    },
-    buttonStyle: {
-        flexDirection: "row",
-        justifyContent: 'space-between',
+        borderColor: 'skyblue',
+        padding: 10,
         margin: 10,
+        fontSize: 20,
+        marginBottom: 5
     },
-    button: {
-        borderWidth: 1,
-        padding: 5,
+    error: {
+        color: "red",
+        paddingLeft: 10,
+        fontSize: 15
+    },
+    wrapper: {
+        flexDirection: 'row',
+        backgroundColor: 'skyblue',
+        justifyContent: 'space-evenly',
+        flexWrap: 'wrap',
         margin: 5,
-        textAlign: 'center',
-        alignItems: 'flex-end',
-        justifyContent: 'center',
-        padding: 10
+        padding: 5,
+        borderRadius: 10
 
     },
-    text: {
-        fontSize: 30,
-        color: 'blue',
-        borderWidth: 1,
-        width: '90%',
-        margin:10,
-        padding:10,
-        textAlign:'center'
-    }
+    container: {
+        backgroundColor: 'black'
+    },
+
 
 })
-export default LoginScreen;
-
-
-
-
-
-
-
+export default App;

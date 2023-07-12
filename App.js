@@ -32,6 +32,7 @@ import GetAPIDataInList from './src/screen/APICall';
 import Practice from './src/screen/practice';
 import Dashboard from './src/screen/Blogs';
 import LoginScreen from './src/screen/LogInScreen';
+import ReferenceComponent from './src/screen/Reference';
 
 const Stack = createNativeStackNavigator();
 
@@ -77,7 +78,19 @@ const App = () => {
         <Stack.Screen name="GetAPIDataInList" component={GetAPIDataInList} />
         <Stack.Screen name="Practice" component={Practice} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+        <Stack.Screen name = "ReferenceComponent" component={ReferenceComponent}/>
+
+        <Stack.Screen name="LoginScreen" component={LoginScreen} options={{
+          title:"login",
+          // headerRight:()=> <Button title="Reference" onPress={(navigation)=>navigation.navigate("ReferenceComponent")}/>,
+          headerStyle:{
+            backgroundColor:'black'
+          },
+          headerTitleStyle:{
+            fontSize:20,
+            color:'skyblue'
+          }
+        }} />
 
 
 
@@ -176,20 +189,15 @@ const Main = ({ navigation }) => {
             title="API call in list"
             onPress={() => navigation.navigate("GetAPIDataInList")} />
 
+          <Button
+            title="Reference"
+            onPress={() => navigation.navigate("ReferenceComponent")} />
+
         </View>
       </SafeAreaView>
     </ScrollView>
   )
 }
-
-
-
-
-
-
-
-
-
 
 
 enableLatestRenderer();
