@@ -1,0 +1,24 @@
+{
+    "users" :[
+        {
+        "name" : "Anurag",
+        "age" : 31,
+        "email" : "anurag.abc"
+    },
+        {
+        "name" : "Anurag",
+        "age" : 31,
+        "email" : "anurag.abc"
+    },
+        {
+        "name" : "Anurag",
+        "age" : 31,
+        "email" : "anurag.abc"
+    },
+        {
+        "name" : "Anurag",
+        "age" : 31,
+        "email" : "anurag.abc"
+    }
+]
+}
